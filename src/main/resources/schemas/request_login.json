@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "User Credentials",
+  "description": "Schema for validating user credentials",
+  "required": ["email", "password"],
+  "properties": {
+    "email": {
+      "description": "Email address of the user",
+      "type": "string",
+      "format": "email"
+    },
+    "password": {
+      "description": "Password of the user",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$%*?&])[A-Za-z\\d@$%*?&]{8,}$"
+    }
+  },
+  "additionalProperties": false
+}

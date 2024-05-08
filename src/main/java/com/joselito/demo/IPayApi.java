@@ -3,7 +3,8 @@ package com.joselito.demo;
 import org.springframework.http.ResponseEntity;
 
 import com.joselito.demo.dto.ErrorResponse;
-import com.joselito.demo.dto.ProductDto;
+import com.joselito.demo.dto.PayRequestDto;
+import com.joselito.demo.dto.PayResponseDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,14 +13,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-public interface IHelloApi {
-
-    @Tag(name = "Products", description = "Obtain the list of products")
-    @Operation(summary = "Lista de productos", description = "Loren ipsum")
+public interface IPayApi {
+    @Tag(name = "Pago con tarjeta", description = "Obtain one product by id")
+    @Operation(summary = "Pago con tarjeta", description = "Loren ipsum")
     @ApiResponses(
         value = {
             @ApiResponse(
-                responseCode = "200", description = "loren ipson landa bla"
+                responseCode = "200", description = "ok"
             ),
             @ApiResponse(
                 responseCode = "500", description = "${api.responseCodes.internalServer.description}",
@@ -31,13 +31,7 @@ public interface IHelloApi {
             )
         }
     )
-    public String index();
+    public ResponseEntity pay(PayRequestDto data);
+
     
-    @Tag(name = "Products", description = "Obtain one product by id")
-    public ResponseEntity<ProductDto> obtain(String id);
-
-
-    @Tag(name = "Products", description = "Create product")
-    public ResponseEntity<ProductDto> create(ProductDto product);
-
 }
