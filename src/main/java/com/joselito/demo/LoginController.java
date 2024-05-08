@@ -31,7 +31,6 @@ public class LoginController implements ILoginApi{
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity login(@RequestBody RequestDto credentials) {
         var response = new ResponseDto("2ufhdas", "2112");  
-        // return ResponseEntity.ok(response); 
         ObjectMapper mapper = new ObjectMapper();
         String json;
         try {

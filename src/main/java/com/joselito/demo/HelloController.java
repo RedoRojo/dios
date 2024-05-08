@@ -25,10 +25,8 @@ import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
 
-@RestController
 public class HelloController implements IHelloApi {
 
-    @GetMapping("/")
     public String index() {
         try{
             throw new Exception("this is a test"); 
@@ -39,7 +37,6 @@ public class HelloController implements IHelloApi {
     }
 
 
-    @GetMapping( value = "/products/{id}", produces = "application/json")
     public ResponseEntity<ProductDto> obtain(@PathVariable String id) {
         
         var product = new ProductDto(1,"a", 2);
@@ -47,7 +44,6 @@ public class HelloController implements IHelloApi {
     }
     
 
-    @PostMapping( value = "/products", produces = "application/json")
     public ResponseEntity create(@RequestBody ProductDto product) {
 
         ObjectMapper mapper = new ObjectMapper();

@@ -31,6 +31,28 @@ public class PayController implements IPayApi{
     @PostMapping(value = "/pay", produces = "application/json")
     public ResponseEntity pay(@RequestBody PayRequestDto credentials) {
         var response = new PayResponseDto(1, "none");  
-        return ResponseEntity.ok(response); 
-    } 
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+        try {
+            json = mapper.writeValueAsString(credentials);
+            JsonSchemaFactory factory = JsonSchemaFactory.getInstance(VersionFlag.V7);
+            JsonSchema jsonSchema = factory.getSchema(PayController.class.getClassLoader().getResourceAsStream("schemas/request_pay.json"));
+            JsonNode jsonNode = mapper.readTree(json);
+            Set<ValidationMessage> errors = jsonSchema.validate(jsonNode); 
+
+            String errorsCombined = "";
+            for( ValidationMessage error: errors) {
+                errorsCombined += error.toString() +  "\n";
+            }
+
+            if(errors.size() > 0) {
+                return ResponseEntity.badRequest().body("Please fix your JSON!,\n"+errorsCombined);
+            }
+            return ResponseEntity.ok(response);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(response);
+        }
+    }
 }
